@@ -1,0 +1,122 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ced4db;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+header {
+    background-color: #122e4b;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header .logo {
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header .navigation img {
+    max-width: 50px;
+    border-radius: 50%;
+}
+
+header .navigation a {
+    color: #fff;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Form container styling */
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-container h1 {
+    margin-bottom: 20px;
+    color: #122e4b;
+    text-align: center;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #122e4b;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.checkbox-field {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-field input {
+    margin-right: 10px;
+}
+
+.main-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #122e4b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.main-btn:hover {
+    background-color: #0f223a;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #122e4b;
+    color: #fff;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
