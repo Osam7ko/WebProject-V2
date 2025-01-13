@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Board</title>
+    <link rel="stylesheet" href="/style/courses.css">
+    <style>
+        .switch-btns {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .switch-btns button {
+            background-color: #122e4b;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .switch-btns button:hover {
+            background-color: #0f223a;
+        }
+        .section-container {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #122e4b;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+
+    <section>
+        <div class="switch-btns">
+            <button onclick="showSection('discussion')">Discussion Board</button>
+            <button onclick="showSection('rate')">Rate This Course</button>
+        </div>
+
+        <div id="discussion" class="section-container active">
+            <h1 class="discussion-board h1">Discussion Board</h1>
+            <div class="form-wrapper">
+                <input type="text" id="author" placeholder="Your Name">
+                <textarea id="message" placeholder="Your Message"></textarea>
+                <button onclick="postMessage()">Post</button>
+            </div>
+            <div id="posts"></div>
+        </div>
+
+        <div id="rate" class="section-container">
+            <iframe src="rate.html" width="100%" height="400px" frameborder="0"></iframe>
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-container').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function postMessage() {
+            const authorInput = document.getElementById("author");
+            const messageInput = document.getElementById("message");
+            const author = authorInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!author || !message) {
+                alert("Please enter both your name and message.");
+                return;
+            }
+
+            const timestamp = new Date().toLocaleString();
+            const postDiv = document.createElement("div");
+            postDiv.classList.add("post");
+            postDiv.innerHTML = `
+                <div class="author">${author}</div>
+                <div class="timestamp">${timestamp}</div>
+                <div class="content">${message}</div>
+            `;
+            document.getElementById("posts").appendChild(postDiv);
+
+            authorInput.value = "";
+            messageInput.value = "";
+        }
+    </script>
+</body>
+</html>

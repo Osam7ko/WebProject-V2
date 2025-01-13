@@ -1,0 +1,142 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ced4db;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+header {
+    background-color: #122e4b;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header .logo {
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header .navigation img {
+    max-width: 50px;
+    border-radius: 50%;
+}
+
+/* Search bar styling */
+.search-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.search-wrapper input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-predictions {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.search-predictions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.search-predictions li {
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-predictions li:hover {
+    background-color: #e0e0e0;
+}
+
+/* Courses section styling */
+.courses-section {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+#object1 {
+    display: flex;
+    gap: 20px;
+}
+
+#object1 a img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Badges section styling */
+.badges-section {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.badges {
+    margin-top: 20px;
+}
+
+.badges .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #122e4b;
+}
+
+.badges .prograss-number {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.prograss {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.prograss::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 10%;
+    background-color: #122e4b;
+}
+
+.badges-content {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.badges-img img {
+    width: 100px;
+    height: auto;
+}
+
+.badge-title {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}

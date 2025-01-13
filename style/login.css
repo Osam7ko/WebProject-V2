@@ -43,6 +43,13 @@ header .navigation a {
     height: 100vh;
 }
 
+.forgot-password-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .signup-section {
     display: flex;
     justify-content: center;

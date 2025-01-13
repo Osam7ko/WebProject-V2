@@ -5,82 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-  <link rel="stylesheet" href="stayl.css">
-  <title>Website with Centered Logo</title>
-  <style>
-    header {
-      display: flex;
-      justify-content: last baseline;
-      align-items: center;
-    }
-
-    .logo1 {
-      max-width: 100px;
-      border-radius: 100%;
-    }
-  </style>
+  <link rel="stylesheet" href="/style/login.css">
+  <script src="/HeaderComponent/loadHeader.js" defer></script>
+  <title>Forgot Password - Useful Knowledge</title>
 </head>
-
 <body>
-  <header>
-
-    <a href="index.html" class="logo">Useful Knowlge </a>
-    <nav class="navigation">
-      <img src="img/logo1.jpg" alt="Logo1" class="logo1">
-
-      <a href="index.html">Login </a>
-      <a href="index2.html">Signup </a>
-
-    </nav>
-  </header>
-  <section>
-    <link rel="stylesheet" href="stayyyl.css">
-
-    <body>
-
-      <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
-        <h1>Forgot password<h1>
-      </div>
-      <div class="formbg-outer">
-        <div class="formbg">
-          <div class="formbg-inner padding-horizontal--48">
-
-            <form id="stripe-login">
-              <div class="field padding-bottom--24">
-                <label for="email">email</label>
-                <input type="email" name="email">
-              </div>
-
-
-              <div class="reset-pass">
-
-              </div>
-
-              <div class=" padding-bottom--24 ">
-                <label for="checkbox">
-
-                </label>
-              </div>
-              <div class="field padding-bottom--24">
-
-                <a href="index3.html" class="main-btn">Send reset link</a>
-              </div>
-
-
-          </div>
-
-          </form>
+  <section class="forgot-password-section">
+    <div class="form-container">
+      <h1>Forgot Password</h1>
+      <form id="forgot-password-form">
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
         </div>
-      </div>
-      <div class="footer-link padding-top--24">
-        <span>Don't Have Account?<a href="index2.html">create account</a></span>
-        <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
-
-
+        <div class="form-field">
+          <button type="submit" class="main-btn">Send Reset Link</button>
         </div>
-      </div>
-      </div>
+      </form>
+    </div>
   </section>
-</body>
 
+  <footer>
+    <p>Don't have an account? <a href="regester.html">Create account</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('forgot-password-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+
+      if (email === '') {
+        alert('Please enter your email address.');
+      } else {
+        alert('A reset link has been sent to your email address.');
+        // You can replace this alert with an actual API call to handle password reset
+      }
+    });
+  </script>
+</body>
 </html>
