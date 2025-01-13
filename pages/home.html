@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+  <link rel="stylesheet" href="/style/home.css">
+  <script src="/HeaderComponent/loadHeader.js" defer></script>
+  <title>Home - Useful Knowledge</title>
+</head>
+
+<body>
+  <section class="search-section">
+    <div class="search-wrapper">
+      <h2>Find your course</h2>
+      <input type="text" id="searchInput" placeholder="Search . . .">
+      <ul id="predictionsList"></ul>
+    </div>
+  </section>
+
+  <section class="courses-section">
+    <div id="object1">
+      <a href="cumEng.html"><img src="/img/enginer2.jpg" alt="Computer Engineering" id="object2"></a>
+      <a href="dataAnaly.html"><img src="../img/DataAnylis.jpg" alt="Data Analysis" id="object3"></a>
+      <a href="mathPage.html"><img src="../img/math.jpg" alt="Mathematics" id="object4"></a>
+    </div>
+  </section>
+
+  <section class="badges-section">
+    <div id="object5">
+      <div class="badges" id="BadG">
+        <div class="title">الشارات</div>
+        <div class="prograss-number">
+          <div class="prograss-from">0%</div>
+          <div class="prograss-to">100%</div>
+        </div>
+        <div class="prograss" id="prograss"></div>
+        <div class="badges-content">
+          <div class="badges-img">
+            <img id="Engineer" src="../img/logoEng.png" alt="Engineer Badge" width="180" height="90">
+            <div class="badge-title">Computer Engineering</div>
+          </div>
+          <div class="badges-img">
+            <img id="data" src="../img/logoData.png" alt="Data Badge" width="180" height="90">
+            <div class="badge-title">Data Analysis</div>
+          </div>
+          <div class="badges-img">
+            <img id="math" src="../img/logomath.png" alt="Math Badge" width="180" height="90">
+            <div class="badge-title">Mathematics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const contentData = ["computer engineering", "data analysis", "mathematics"];
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const input = this.value.toLowerCase();
+      const predictionsList = document.getElementById('predictionsList');
+      predictionsList.innerHTML = '';
+
+      const matchingPredictions = contentData.filter(item => item.toLowerCase().startsWith(input));
+
+      if (matchingPredictions.length > 0) {
+        matchingPredictions.forEach(prediction => {
+          const li = document.createElement('li');
+          li.textContent = prediction;
+          li.addEventListener('click', () => {
+            performSearch(prediction);
+          });
+          predictionsList.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = 'No predictions found.';
+        predictionsList.appendChild(li);
+      }
+    });
+
+    function performSearch(query) {
+      alert(`Searching for: ${query}`);
+    }
+  </script>
+</body>
+
+</html>

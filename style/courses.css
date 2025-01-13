@@ -1,0 +1,181 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ced4db;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+header {
+    background-color: #122e4b;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header .logo {
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header .navigation img {
+    max-width: 50px;
+    border-radius: 50%;
+}
+
+/* Course section styling */
+.course-section {
+    padding: 40px;
+    display: block;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Video container styling */
+.course-section .video-container {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+.course-section iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Switch button styling */
+.switch-btns {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.switch-btns button {
+    background-color: #122e4b;
+    color: #ffffff;
+    border: none;
+    padding: 12px 30px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.switch-btns button:hover {
+    background-color: #122e4b;
+}
+
+/* Discussion and form layout */
+.discussion-board-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.discussion-board,
+.form-wrapper {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 670px;
+    margin-bottom: 20px;
+}
+
+.discussion-board h1 {
+    text-align: center;
+    color: #122e4b;
+}
+
+/* Post styling */
+.post {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post .author {
+    font-weight: bold;
+    color: #333;
+}
+
+.post .timestamp {
+    font-size: 12px;
+    color: #888;
+}
+
+.post .content {
+    margin-top: 10px;
+}
+
+/* Form input styling */
+.form-wrapper input,
+.form-wrapper textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.form-wrapper button {
+    background-color: #122e4b;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-wrapper button:hover {
+    background-color: #0f223a;
+}
+
+/* Reply button styling */
+.reply-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.reply-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .discussion-board-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .course-section iframe {
+        height: 400px;
+    }
+
+    .discussion-board,
+    .form-wrapper {
+        max-width: 100%;
+    }
+}
