@@ -22,9 +22,18 @@
 
   <section class="courses-section">
     <div id="object1">
-      <a href="cumEng.html"><img src="/img/enginer2.jpg" alt="Computer Engineering" id="object2"></a>
-      <a href="dataAnaly.html"><img src="../img/DataAnylis.jpg" alt="Data Analysis" id="object3"></a>
-      <a href="mathPage.html"><img src="../img/math.jpg" alt="Mathematics" id="object4"></a>
+      <div class="course">
+        <a href="cumEng.html" data-course="Computer Engineering"><img src="/img/enginer2.jpg" alt="Computer Engineering" id="object2"></a>
+        <button class="done-btn" data-course="engineering">Done</button>
+      </div>
+      <div class="course">
+        <a href="dataAnaly.html" data-course="Data Analysis"><img src="../img/DataAnylis.jpg" alt="Data Analysis" id="object3"></a>
+        <button class="done-btn" data-course="dataAnalysis">Done</button>
+      </div>
+      <div class="course">
+        <a href="mathPage.html" data-course="Data Analysis"><img src="../img/math.jpg" alt="Mathematics" id="object4"></a>
+        <button class="done-btn" data-course="math">Done</button>
+      </div>
     </div>
   </section>
 
@@ -32,28 +41,160 @@
     <div id="object5">
       <div class="badges" id="BadG">
         <div class="title">الشارات</div>
-        <div class="prograss-number">
-          <div class="prograss-from">0%</div>
-          <div class="prograss-to">100%</div>
+        <div class="progress-container">
+          <div class="prograss-number">
+            <div class="prograss-from">0%</div>
+            <div class="prograss-to">100%</div>
+          </div>
+          <div class="prograss" id="prograss"></div>
         </div>
-        <div class="prograss" id="prograss"></div>
         <div class="badges-content">
           <div class="badges-img">
-            <img id="Engineer" src="../img/logoEng.png" alt="Engineer Badge" width="180" height="90">
+            <img id="Engineer" src="../img/logoEng.png" alt="Engineer Badge">
             <div class="badge-title">Computer Engineering</div>
           </div>
           <div class="badges-img">
-            <img id="data" src="../img/logoData.png" alt="Data Badge" width="180" height="90">
+            <img id="data" src="../img/logoData.png" alt="Data Badge">
             <div class="badge-title">Data Analysis</div>
           </div>
           <div class="badges-img">
-            <img id="math" src="../img/logomath.png" alt="Math Badge" width="180" height="90">
+            <img id="math" src="../img/logomath.png" alt="Math Badge">
             <div class="badge-title">Mathematics</div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      console.log("🔍 Checking stored login info...");
+
+      await new Promise(resolve => setTimeout(resolve, 500)); // **Wait for storage update**
+      const token = localStorage.getItem("token");
+      const username = localStorage.getItem("username");
+
+      console.log("🔍 LocalStorage Token:", token);
+      console.log("🔍 LocalStorage Username:", username);
+
+      // Ensure user is logged in
+      if (!token || !username) {
+          console.warn("No token or username found in localStorage.");
+          alert("You must log in first!");
+          window.location.href = "/auth/login.html";
+          return;
+      }
+      console.log("✅ User authenticated as:", username);
+
+      // ✅ Update Welcome Message
+      const welcomeUser = document.querySelector("#welcome-user");
+      if (welcomeUser) {
+          welcomeUser.textContent = `Welcome, ${username}`;
+      }
+
+      console.log("Token and username exist. Fetching user progress...");
+
+      const progressBar = document.getElementById("prograss");
+      const progressFrom = document.querySelector(".prograss-from");
+
+      const badges = {
+          engineering: document.getElementById("Engineer"),
+          dataAnalysis: document.getElementById("data"),
+          math: document.getElementById("math"),
+      };
+
+      try {
+          const response = await fetch(`http://localhost:5001/api/user/progress/${username}`, {
+              headers: { Authorization: `Bearer ${token}` },
+          });
+
+          console.log("🔍 API Fetch Response Status:", response.status);
+
+          if (response.status === 401) {
+              alert("Session expired. Please log in again.");
+              localStorage.removeItem("token");
+              localStorage.removeItem("username");
+              window.location.href = "/auth/login.html";
+              return;
+          }
+
+          if (!response.ok) throw new Error(`Failed to fetch user progress. Status: ${response.status}`);
+
+          const data = await response.json();
+          console.log("User progress data:", data);
+
+          updateProgress(data.progress);
+      } catch (error) {
+          console.error("Error fetching progress:", error);
+      }
+
+      // Handle course completion when clicking the "Done" button
+      document.querySelectorAll(".done-btn").forEach((button) => {
+          button.addEventListener("click", async () => {
+              const course = button.getAttribute("data-course");
+
+              let newProgress = parseInt(progressFrom.textContent) || 0;
+              newProgress = Math.min(100, newProgress + 33);
+
+              try {
+                  const updateResponse = await fetch(`http://localhost:5001/api/user/progress/${username}`, {
+                      method: "PUT",
+                      headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify({ progress: newProgress }),
+                  });
+
+                  console.log("Update response status:", updateResponse.status);
+
+                  if (updateResponse.status === 401) {
+                      alert("Session expired. Please log in again.");
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("username");
+                      window.location.href = "/auth/login.html";
+                      return;
+                  }
+
+                  if (!updateResponse.ok) throw new Error("Failed to update progress");
+
+                  updateProgress(newProgress);
+
+                  // Show the corresponding badge when progress reaches at least 33%
+                  if (newProgress >= 33) {
+                      badges[course].style.opacity = "1"; // Show the badge
+                  }
+              } catch (error) {
+                  console.error("Error updating progress:", error);
+                  alert("An error occurred while updating progress.");
+              }
+          });
+      });
+
+      function updateProgress(progress) {
+          progressBar.style.width = `${progress}%`;
+          progressFrom.textContent = `${progress}%`;
+      }
+    });
+
+      document.querySelectorAll(".course a").forEach((link) => {
+        link.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent immediate navigation
+        const courseName = this.getAttribute("data-course");
+
+        if (!courseName) {
+            console.error("⚠️ No course name found!");
+            return;
+        }
+
+        localStorage.setItem("currentCourse", courseName);
+        console.log("🔍 Current Course Set:", courseName);
+
+        // Redirect AFTER storing course name
+        window.location.href = this.href;
+      });
+    });
+  </script>
 
   <script>
     const contentData = ["computer engineering", "data analysis", "mathematics"];

@@ -23,9 +23,26 @@ header .logo {
     font-weight: bold;
 }
 
+header .navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 header .navigation img {
     max-width: 50px;
     border-radius: 50%;
+}
+
+header .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+header .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
 }
 
 /* Course section styling */

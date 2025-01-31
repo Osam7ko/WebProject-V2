@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <link rel="stylesheet" href="/style/login.css">
     <script src="/HeaderComponent/loadHeader.js" defer></script>
     <title>Signup - Useful Knowledge</title>
@@ -15,24 +14,12 @@
             <h1>Signup</h1>
             <form id="signup-form">
                 <div class="form-field">
-                    <label for="firstname">First Name</label>
-                    <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required>
-                </div>
-                <div class="form-field">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 </div>
                 <div class="form-field">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="form-field">
-                    <label for="birthday">Date of Birth</label>
-                    <input type="date" id="birthday" name="birthday" required>
-                </div>
-                <div class="form-field">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
                 </div>
                 <div class="form-field">
                     <label for="password">Password</label>
@@ -53,20 +40,7 @@
         <p>Already have an account? <a href="/auth/login.html">Login</a></p>
     </footer>
 
-    <script>
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-
-            if (password !== confirmPassword) {
-                alert('Passwords do not match. Please try again.');
-            } else {
-                alert('Signup successful!');
-                // Redirect to login page
-                window.location.href = '/auth/login.html';
-            }
-        });
-    </script>
+    <!-- Include auth.js -->
+    <script src="/auth/auth.js"></script>
 </body>
 </html>
