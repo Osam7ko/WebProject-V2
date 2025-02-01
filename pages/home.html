@@ -68,14 +68,14 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      console.log("🔍 Checking stored login info...");
+      console.log("Checking stored login info...");
 
       await new Promise(resolve => setTimeout(resolve, 500)); // **Wait for storage update**
       const token = localStorage.getItem("token");
       const username = localStorage.getItem("username");
 
-      console.log("🔍 LocalStorage Token:", token);
-      console.log("🔍 LocalStorage Username:", username);
+      console.log("LocalStorage Token:", token);
+      console.log("LocalStorage Username:", username);
 
       // Ensure user is logged in
       if (!token || !username) {
@@ -84,9 +84,9 @@
           window.location.href = "/auth/login.html";
           return;
       }
-      console.log("✅ User authenticated as:", username);
+      console.log("User authenticated as:", username);
 
-      // ✅ Update Welcome Message
+      // Update Welcome Message
       const welcomeUser = document.querySelector("#welcome-user");
       if (welcomeUser) {
           welcomeUser.textContent = `Welcome, ${username}`;
@@ -108,7 +108,7 @@
               headers: { Authorization: `Bearer ${token}` },
           });
 
-          console.log("🔍 API Fetch Response Status:", response.status);
+          console.log(" API Fetch Response Status:", response.status);
 
           if (response.status === 401) {
               alert("Session expired. Please log in again.");
@@ -183,7 +183,7 @@
         const courseName = this.getAttribute("data-course");
 
         if (!courseName) {
-            console.error("⚠️ No course name found!");
+            console.error("No course name found!");
             return;
         }
 
