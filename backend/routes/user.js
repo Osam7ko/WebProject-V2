@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
             expiresIn: "1h",
         });
 
-        console.log("✅ Login successful. Returning:", { username: user.username, token });
+        console.log("Login successful. Returning:", { username: user.username, token });
 
         res.json({ message: "Login successful", username: user.username, token });
     } catch (err) {
@@ -60,18 +60,18 @@ router.post("/login", async (req, res) => {
 router.get('/progress/:username', async (req, res) => {
     try {
         const { username } = req.params;
-        console.log("🔍 API Received Progress Request for:", username);
+        console.log("API Received Progress Request for:", username);
 
         const user = await User.findOne({ username });
         if (!user) {
-            console.warn("⚠️ User not found:", username);
+            console.warn("User not found:", username);
             return res.status(404).json({ message: 'User not found' });
         }
 
-        console.log("✅ Found user. Returning progress:", user.progress);
+        console.log("Found user. Returning progress:", user.progress);
         res.json({ progress: user.progress });
     } catch (err) {
-        console.error("❌ Error fetching progress:", err);
+        console.error("Error fetching progress:", err);
         res.status(500).json({ message: 'Error fetching progress', error: err.message });
     }
 });
@@ -81,24 +81,24 @@ router.put('/progress/:username', async (req, res) => {
         const { username } = req.params;
         const { progress } = req.body;
 
-        console.log(`🔄 Updating progress for ${username} to ${progress}%`);
+        console.log(`Updating progress for ${username} to ${progress}%`);
 
         const user = await User.findOneAndUpdate({ username }, { progress }, { new: true });
 
         if (!user) {
-            console.warn("⚠️ User not found:", username);
+            console.warn("User not found:", username);
             return res.status(404).json({ message: 'User not found' });
         }
 
-        console.log("✅ Progress updated successfully:", user.progress);
+        console.log("Progress updated successfully:", user.progress);
         res.json({ message: 'Progress updated successfully', progress: user.progress });
     } catch (err) {
-        console.error("❌ Error updating progress:", err);
+        console.error("Error updating progress:", err);
         res.status(500).json({ message: 'Error updating progress', error: err.message });
     }
 });
 
-// 🔹 POST: Add Discussion Post
+// POST: Add Discussion Post
 router.post('/discussion', async (req, res) => {
     try {
         const { course, author, message } = req.body;
@@ -119,7 +119,7 @@ router.post('/discussion', async (req, res) => {
     }
 });
 
-// 🔹 GET: Get Discussions for a Course
+//  GET: Get Discussions for a Course
 router.get('/discussion/:course', async (req, res) => {
     try {
         const { course } = req.params;
@@ -136,7 +136,7 @@ router.get('/discussion/:course', async (req, res) => {
     }
 });
 
-// ✅ POST: Save a rating
+//  POST: Save a rating
 router.post('/rate', async (req, res) => {
     try {
         const { course, rating, review, user } = req.body;
@@ -154,7 +154,7 @@ router.post('/rate', async (req, res) => {
     }
 });
 
-// ✅ GET: Fetch all ratings for a course
+//  GET: Fetch all ratings for a course
 router.get('/rate/:course', async (req, res) => {
     try {
         const { course } = req.params;
