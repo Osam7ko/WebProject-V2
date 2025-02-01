@@ -45,8 +45,9 @@ function loadHeader() {
                     if (signupLink) signupLink.style.display = 'block';
                 }
             }, 500); // Small delay ensures values are loaded
+
         })
-        .catch(error => console.error('Error loading header:', error));
+        .catch((error) => console.error('Error loading header:', error));
 }
 
 window.onload = loadHeader;
