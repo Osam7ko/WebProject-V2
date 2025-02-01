@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rate Us - Useful Knowledge</title>
     <link rel="stylesheet" href="/style/styleRate.css">
+    <script src="/HeaderComponent/authCheck.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
@@ -24,30 +25,93 @@
                 <label for="rate-2" class="fas fa-star"></label>
                 <input type="radio" name="rate" id="rate-1">
                 <label for="rate-1" class="fas fa-star"></label>
-                <form action="#">
+                <form>
                     <header></header>
                     <div class="textarea">
-                        <textarea cols="30" placeholder="Describe your experience.."></textarea>
+                        <textarea id="review" cols="30" placeholder="Describe your experience.."></textarea>
                     </div>
                     <div class="btn">
                         <button type="submit">Post</button>
                     </div>
                 </form>
             </div>
+            <div id="ratings-container"></div> 
         </div>
     </section>
 
     <script>
-        const btn = document.querySelector("button[type='submit']");
-        const post = document.querySelector(".post");
-        const widget = document.querySelector(".star-widget");
-        const editBtn = document.querySelector(".edit");
+        document.querySelector("button[type='submit']").addEventListener("click", async (e) => {
+            e.preventDefault();
 
-        btn.onclick = () => {
-            widget.style.display = "none";
-            post.style.display = "block";
-            return false;
-        };
+            const rating = document.querySelector("input[name='rate']:checked")?.id.replace("rate-", "");
+            const review = document.getElementById("review").value.trim();
+            const user = localStorage.getItem("username");
+            const course = localStorage.getItem("currentCourse");
+
+            if (!rating || !user || !course) {
+                alert("Missing rating or user data.");
+                return;
+            }
+
+            const ratingData = { course, rating, review, user };
+
+            try {
+                const response = await fetch('http://localhost:5001/api/user/rate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(ratingData),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert("Rating submitted successfully!");
+                    fetchRatings(); // 
+                } else {
+                    alert(`Error: ${data.message}`);
+                }
+            } catch (error) {
+                console.error("Error submitting rating:", error);
+            }
+        });
+
+        // 
+        async function fetchRatings() {
+            const course = localStorage.getItem("currentCourse");
+            const ratingsContainer = document.getElementById("ratings-container");
+
+            try {
+                const response = await fetch(`http://localhost:5001/api/user/rate/${course}`);
+                const ratings = await response.json();
+
+                if (!Array.isArray(ratings) || ratings.length === 0) {
+                    ratingsContainer.innerHTML = "<p>No ratings yet. Be the first to rate!</p>";
+                    return;
+                }
+
+                ratingsContainer.innerHTML = ratings.map(rating => `
+                    <div class="rating-box">
+                        <p><strong>${rating.user}</strong> rated: ${"⭐".repeat(rating.rating)}</p>
+                        <p>${rating.review ? rating.review : "No comment provided."}</p>
+                        <small>${new Date(rating.timestamp).toLocaleString()}</small>
+                    </div>
+                `).join("");
+            } catch (error) {
+                console.error("Error fetching ratings:", error);
+            }
+        }
+
+        // 
+        document.addEventListener("DOMContentLoaded", fetchRatings);
     </script>
+
+    <style>
+        .rating-box {
+            background-color: #122e4b;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            color: white;
+        }
+    </style>
 </body>
 </html>
