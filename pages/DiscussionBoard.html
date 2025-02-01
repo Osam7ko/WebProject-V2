@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discussion Board</title>
     <link rel="stylesheet" href="/style/courses.css">
+    <script src="/HeaderComponent/authCheck.js" defer></script>
     <style>
         .switch-btns {
             display: flex;
@@ -67,30 +68,84 @@
             document.getElementById(sectionId).classList.add('active');
         }
 
-        function postMessage() {
-            const authorInput = document.getElementById("author");
-            const messageInput = document.getElementById("message");
-            const author = authorInput.value.trim();
-            const message = messageInput.value.trim();
+        async function postMessage() {
+            const author = localStorage.getItem("username");
+            const message = document.getElementById("message").value.trim();
+            const course = localStorage.getItem("currentCourse");
 
-            if (!author || !message) {
-                alert("Please enter both your name and message.");
+            if (!author || !course || !message) {
+                alert("Missing data. Please try again.");
+                console.error("Missing data:", { author, course, message });
                 return;
             }
 
-            const timestamp = new Date().toLocaleString();
-            const postDiv = document.createElement("div");
-            postDiv.classList.add("post");
-            postDiv.innerHTML = `
-                <div class="author">${author}</div>
-                <div class="timestamp">${timestamp}</div>
-                <div class="content">${message}</div>
-            `;
-            document.getElementById("posts").appendChild(postDiv);
+            console.log(" Posting message:", { course, author, message });
 
-            authorInput.value = "";
-            messageInput.value = "";
+            const postData = { course, author, message };
+
+            try {
+                const response = await fetch('http://localhost:5001/api/user/discussion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert("Message posted successfully!");
+                    document.getElementById("message").value = "";
+                    fetchDiscussions(); // Refresh discussion board
+                } else {
+                    console.error(" Server error:", data);
+                    alert(`Error: ${data.message}`);
+                }
+            } catch (error) {
+                console.error(" Error posting message:", error);
+                alert("An error occurred while posting your message.");
+            }
         }
+
+        async function fetchDiscussions() {
+            const course = localStorage.getItem("currentCourse");
+
+            if (!course || course === "null") {
+                console.error(" No course found in localStorage!");
+                alert("Error: No course selected.");
+                return;
+            }
+
+            console.log(" Fetching discussions for course:", course);
+
+            try {
+                const response = await fetch(`http://localhost:5001/api/user/discussion/${encodeURIComponent(course)}`);
+
+                if (!response.ok) {
+                    console.warn(" Discussion fetch failed with status:", response.status);
+                    document.getElementById("posts").innerHTML = `<p style="color: red;">No discussions found for this course.</p>`;
+                    return;
+                }
+
+                const discussions = await response.json();
+
+                if (!Array.isArray(discussions)) {
+                    console.error(" Unexpected response format:", discussions);
+                    return;
+                }
+
+                document.getElementById("posts").innerHTML = discussions.map(post => `
+                    <div class="post">
+                        <div class="author"><strong>${post.author}</strong></div>
+                        <div class="timestamp">${new Date(post.timestamp).toLocaleString()}</div>
+                        <div class="content">${post.message}</div>
+                    </div>
+                `).join("");
+            } catch (error) {
+                console.error(" Error fetching discussions:", error);
+                alert("Failed to load discussions.");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchDiscussions);
     </script>
 </body>
 </html>
